@@ -1,0 +1,378 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>Awooo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--bg:#f2f2f7;--card:#fff;--text:#1c1c1e;--sub:#8e8e93;--border:#c6c6c8;
+--accent:#636366;--danger:#ff3b30;--tool:#e5e5ea;--sel:#d1d1d6;
+--glass:rgba(242,242,247,0.9);--glass-menu:rgba(255,255,255,0.93);
+--hh:56px;--ph:16px;
+--fs:clamp(17px,4.5vw,22px);
+--fs-sm:clamp(14px,3.8vw,18px);
+--fs-et:clamp(26px,6vw,34px);
+--fs-eb:clamp(17px,4.5vw,22px);
+--sidebar-w:120px;--list-w:200px;
+--c-red:#ff3b30;--c-orange:#ff9500;--c-yellow:#ffcc00;--c-green:#34c759;
+--c-blue:#007aff;--c-purple:#af52de;--c-pink:#ff2d55;--c-gray:#8e8e93;
+}
+[data-theme=dark]{
+--bg:#000;--card:#1c1c1e;--text:#fff;--border:#38383a;--accent:#8e8e93;
+--tool:#2c2c2e;--sel:#3a3a3c;--glass:rgba(0,0,0,0.9);--glass-menu:rgba(44,44,46,0.95);
+--c-red:#ff453a;--c-orange:#ff9f0a;--c-yellow:#ffd60a;--c-green:#30d158;
+--c-blue:#0a84ff;--c-purple:#bf5af2;--c-pink:#ff375f;--c-gray:#98989e;
+}
+body,.app,header,.note-item,.editor,.editor-title,.editor-body,.action-bar,.tool-btn{
+transition:background-color .35s ease,color .35s ease,border-color .35s ease}
+html,body{height:100%;width:100%;overflow:hidden;position:fixed}
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+background:#111;color:var(--text);display:flex;justify-content:center;align-items:stretch;
+letter-spacing:0.3px}
+.app{
+width:100%;max-width:100%;margin:0 auto;background:var(--bg);
+display:flex;flex-direction:column;position:relative;overflow:hidden;
+height:100vh;height:100dvh}
+header{
+height:var(--hh);padding:0 var(--ph);background:var(--bg);
+display:flex;align-items:center;justify-content:space-between;
+border-bottom:.5px solid var(--border);position:relative;flex-shrink:0;
+backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+background:var(--glass)}
+header h1{
+font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:-0.5px;
+font-size:clamp(30px,7vw,40px);position:absolute;
+left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--text)}
+header button{
+background:none;border:none;font-size:clamp(15px,4vw,18px);color:var(--danger);
+cursor:pointer;visibility:hidden;position:relative;z-index:1;padding:6px 10px;
+border-radius:8px;transition:background .15s;letter-spacing:0.3px}
+header button:active{background:rgba(255,59,48,.1)}
+header button.visible{visibility:visible}
+.menu-btn{
+width:clamp(44px,6vw,50px);height:clamp(44px,6vw,50px);display:flex;flex-direction:column;
+justify-content:center;align-items:center;gap:5px;cursor:pointer;
+position:relative;z-index:1;border-radius:10px;background:transparent}
+.menu-btn:active{background:var(--sel)}
+.menu-btn span{display:block;width:clamp(22px,4vw,26px);height:2.5px;background:var(--accent);border-radius:2px}
+.notes-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.note-item{
+padding:clamp(18px,4vh,22px) var(--ph);border-bottom:.5px solid var(--border);
+background:var(--bg);cursor:pointer;position:relative}
+.note-item::after{
+content:'';position:absolute;right:0;top:0;bottom:0;width:clamp(5px,1.5vw,6px);
+background:var(--note-color,transparent);border-radius:2px 0 0 2px}
+.note-item.selected{background:var(--sel)}
+.note-title{font-size:var(--fs);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);margin-bottom:clamp(4px,1vh,6px);letter-spacing:0.3px}
+.note-title u{text-decoration:underline;text-underline-offset:2px}
+.note-date{font-size:var(--fs-sm);color:var(--sub);letter-spacing:0.3px}
+.skeleton-item{
+padding:clamp(18px,4vh,22px) var(--ph);border-bottom:.5px solid var(--border);
+background:var(--bg);display:flex;flex-direction:column;gap:clamp(8px,2vh,10px)}
+.skeleton-title{width:70%;height:clamp(18px,3vh,22px);background:var(--sel);border-radius:6px;animation:pulse 1.5s infinite}
+.skeleton-date{width:40%;height:clamp(14px,2.5vh,16px);background:var(--sel);border-radius:4px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:.8}}
+.fab{
+position:absolute;bottom:clamp(24px,5vh,32px);right:clamp(24px,5vw,32px);
+width:clamp(70px,10vw,80px);height:clamp(70px,10vw,80px);
+border-radius:clamp(20px,3vw,24px);background:var(--accent);color:#fff;border:none;
+font-size:clamp(40px,7vw,48px);font-weight:300;cursor:pointer;display:flex;
+align-items:center;justify-content:center;
+box-shadow:0 8px 20px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.2) inset,0 2px 4px rgba(255,255,255,.3) inset;
+z-index:10;transition:transform .2s,background .35s,box-shadow .2s}
+.fab:active{transform:scale(.94);box-shadow:0 4px 12px rgba(0,0,0,.2),0 0 0 1px rgba(255,255,255,.15) inset}
+.fab.hidden{display:none}
+.action-bar{
+position:absolute;bottom:0;width:100%;height:clamp(70px,10vh,80px);background:var(--card);
+display:none;align-items:center;padding:0 var(--ph);gap:clamp(8px,2vw,12px);
+border-top:.5px solid var(--border);z-index:20;
+backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+background:var(--glass)}
+.action-bar.visible{display:flex}
+.action-bar button{
+flex:1;height:clamp(52px,7vh,60px);border:none;border-radius:14px;font-weight:600;
+font-size:clamp(17px,4vw,20px);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+box-shadow:0 2px 8px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset,0 1px 3px rgba(255,255,255,.2) inset;
+transition:transform .15s,box-shadow .15s;letter-spacing:0.3px}
+.action-bar button:active{transform:scale(.97);box-shadow:0 1px 4px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.08) inset}
+.action-bar .pin-btn{background:var(--accent);color:#fff}
+.action-bar .delete-btn{background:var(--danger);color:#fff}
+.pin-icon{position:relative;width:clamp(16px,3vw,18px);height:clamp(16px,3vw,18px)}
+.pin-icon::before{content:'';position:absolute;width:clamp(12px,2.5vw,14px);height:clamp(12px,2.5vw,14px);border-radius:50%;background:#fff;top:0;left:2px}
+.pin-icon::after{content:'';position:absolute;width:2px;height:clamp(8px,1.5vh,10px);background:#fff;bottom:-6px;left:clamp(7px,1.5vw,8px);border-radius:1px}
+.palette-icon{display:flex;gap:clamp(4px,1vw,5px)}
+.palette-icon span{width:clamp(10px,2.5vw,12px);height:clamp(10px,2.5vw,12px);border-radius:50%}
+.palette-icon span:nth-child(1){background:#ff3b30}
+.palette-icon span:nth-child(2){background:#ffcc00}
+.palette-icon span:nth-child(3){background:#34c759}
+.trash-icon{position:relative;width:clamp(16px,3vw,18px);height:clamp(18px,3.5vw,20px)}
+.trash-icon::before{content:'';position:absolute;top:0;left:1px;width:clamp(14px,2.8vw,16px);height:clamp(3px,0.8vh,4px);background:#fff;border-radius:2px 2px 0 0}
+.trash-icon::after{content:'';position:absolute;top:4px;left:2px;width:clamp(12px,2.5vw,14px);height:clamp(14px,2.8vh,16px);background:#fff;border-radius:0 0 3px 3px}
+.menu-overlay{
+position:absolute;inset:0;background:rgba(0,0,0,0.3);z-index:30;
+opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;
+backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.menu-overlay.open{opacity:1;visibility:visible}
+.menu-dropdown{
+position:absolute;top:calc(var(--hh) + 8px);right:var(--ph);
+background:var(--glass-menu);border-radius:16px;min-width:clamp(220px,50vw,280px);overflow:hidden;
+box-shadow:0 8px 30px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.1) inset;
+transform-origin:top right;transform:scale(.78);opacity:0;pointer-events:none;
+transition:transform .2s cubic-bezier(.34,1.45,.64,1),opacity .14s ease;
+backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+[data-theme=dark] .menu-dropdown{box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05) inset}
+.menu-overlay.open .menu-dropdown{transform:scale(1);opacity:1;pointer-events:auto}
+.menu-item{
+padding:clamp(18px,3vh,22px) var(--ph);font-size:clamp(18px,4.5vw,22px);cursor:pointer;color:var(--text);
+border-bottom:.5px solid rgba(120,120,128,.18);transition:background .12s;letter-spacing:0.3px}
+.menu-item:last-child{border-bottom:none}
+.menu-item:active{background:rgba(120,120,128,.14)}
+.menu-item.disabled{opacity:.3;pointer-events:none}
+.color-picker{
+position:absolute;bottom:clamp(100px,15vh,120px);left:var(--ph);right:var(--ph);
+background:var(--card);border-radius:18px;padding:clamp(18px,3vh,22px);
+box-shadow:0 8px 30px rgba(0,0,0,.2);z-index:50;
+display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,3vw,18px);border:0.5px solid var(--border);
+transform:scale(.9);opacity:0;visibility:hidden;pointer-events:none;
+transition:transform .2s cubic-bezier(.34,1.45,.64,1),opacity .14s ease,visibility .14s ease}
+.color-picker.visible{transform:scale(1);opacity:1;visibility:visible;pointer-events:auto}
+.color-option{
+aspect-ratio:1;border-radius:14px;cursor:pointer;border:3px solid transparent;
+transition:transform .15s,box-shadow .15s;
+box-shadow:0 2px 8px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset}
+.color-option:active{transform:scale(.95)}
+.color-option.selected{border-color:var(--text)}
+.editor{
+position:absolute;inset:0;background:var(--card);transform:translateX(100%);
+transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:40;
+display:flex;flex-direction:column;overflow:hidden}
+.editor.open{transform:translateX(0)}
+.editor-header{
+height:var(--hh);padding:0 var(--ph);display:flex;justify-content:space-between;
+align-items:center;background:var(--glass);border-bottom:.5px solid rgba(120,120,128,.2);
+flex-shrink:0;position:sticky;top:0;z-index:100;
+backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+box-shadow:0 1px 0 rgba(0,0,0,.02),0 0 0 1px rgba(255,255,255,.05) inset}
+.editor-tools{display:flex;gap:clamp(8px,2vw,10px);align-items:center}
+.tool-sep{width:1px;height:clamp(28px,5vh,32px);background:var(--border);margin:0 4px;flex-shrink:0}
+.tool-btn{
+width:clamp(44px,7vw,50px);height:clamp(44px,7vw,50px);border-radius:10px;border:1px solid var(--border);
+background:var(--tool);color:var(--text);font-weight:700;font-size:clamp(18px,4.5vw,22px);
+cursor:pointer;display:flex;align-items:center;justify-content:center;
+box-shadow:0 2px 6px rgba(0,0,0,.06),0 0 0 1px rgba(255,255,255,.1) inset,0 1px 2px rgba(255,255,255,.15) inset;
+transition:transform .15s,box-shadow .15s,background .15s}
+.tool-btn:active{transform:scale(.94)}
+.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);
+box-shadow:0 2px 8px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.2) inset}
+.tool-btn.disabled{opacity:.3;pointer-events:none}
+#checklistBtn{font-weight:700;font-size:clamp(22px,5vw,26px);line-height:1}
+.editor-content{flex:1;display:flex;flex-direction:column;overflow-y:auto}
+.editor-title{
+font-size:var(--fs-et);font-weight:700;padding:clamp(22px,4vh,28px) var(--ph) clamp(18px,3vh,22px);
+outline:none;min-height:clamp(80px,12vh,100px);border-bottom:.5px solid var(--border);
+color:var(--text);background:var(--card);letter-spacing:0.3px}
+.editor-title:empty:before{content:'Título da nota';color:var(--sub);font-weight:400;letter-spacing:0.3px}
+.editor-body{
+flex:1;font-size:var(--fs-eb);padding:clamp(18px,3vh,22px) var(--ph) clamp(80px,12vh,100px);outline:none;
+line-height:1.6;white-space:pre-wrap;color:var(--text);background:var(--card);min-height:clamp(150px,25vh,200px);
+letter-spacing:0.3px}
+.editor-body:empty:before{content:'Escreva algo incrível...';color:var(--sub);font-weight:400;letter-spacing:0.3px}
+.checklist-item{position:relative;padding-left:clamp(38px,8vw,44px);min-height:clamp(32px,5vh,38px);margin-bottom:clamp(10px,2vh,12px);display:block}
+.checklist-item::before{
+content:'';position:absolute;left:3px;top:3px;width:clamp(24px,5vw,28px);height:clamp(24px,5vw,28px);
+border:2px solid var(--accent);border-radius:6px;background:var(--card)}
+.checklist-item.done{text-decoration:line-through;opacity:.65}
+.checklist-item.done::before{background:var(--accent)}
+.confirm-dialog{
+position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;
+display:flex;align-items:center;justify-content:center;
+backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
+.confirm-dialog.visible{opacity:1;visibility:visible}
+.confirm-box{
+background:var(--card);border-radius:20px;padding:clamp(28px,5vh,32px);max-width:clamp(320px,80vw,400px);
+width:90%;text-align:center;
+box-shadow:0 20px 40px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.1) inset;
+transform:scale(.9);transition:transform .2s cubic-bezier(.34,1.45,.64,1)}
+.confirm-dialog.visible .confirm-box{transform:scale(1)}
+.confirm-box h3{font-size:clamp(22px,5vw,28px);margin-bottom:clamp(10px,2vh,14px);color:var(--text);letter-spacing:0.3px}
+.confirm-box p{font-size:clamp(18px,4vw,22px);color:var(--sub);margin-bottom:clamp(28px,5vh,32px);letter-spacing:0.3px}
+.confirm-box button{
+width:100%;padding:clamp(16px,3vh,20px);border:none;border-radius:14px;font-size:clamp(18px,4.5vw,22px);
+font-weight:600;cursor:pointer;margin-bottom:8px;
+box-shadow:0 2px 8px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset;
+letter-spacing:0.3px}
+.confirm-box button:active{transform:scale(.97)}
+.confirm-box .confirm-delete{background:var(--danger);color:#fff}
+.confirm-box .confirm-cancel{background:transparent;color:var(--accent);box-shadow:none}
+.confirm-box .confirm-cancel:active{background:rgba(120,120,128,.1)}
+.toast{
+position:absolute;bottom:clamp(100px,15vh,120px);left:50%;transform:translateX(-50%) translateY(20px);
+background:var(--card);color:var(--text);padding:clamp(14px,3vh,18px) clamp(28px,6vw,36px);
+border-radius:40px;font-size:clamp(18px,4.5vw,22px);font-weight:500;letter-spacing:0.3px;
+box-shadow:0 8px 20px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.1) inset;
+z-index:60;opacity:0;visibility:hidden;white-space:nowrap;
+transition:transform .3s cubic-bezier(.34,1.45,.64,1),opacity .2s ease,visibility .2s ease}
+.toast.visible{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
+@media(orientation:landscape){
+.app{flex-direction:row;max-width:100%;height:100dvh}
+header{width:var(--sidebar-w);height:100%;flex-direction:column;justify-content:flex-start;padding:16px 0 0 0;border-right:.5px solid var(--border);border-bottom:none;flex-shrink:0}
+header h1{position:static;transform:none;margin:0 0 20px 0}
+.menu-btn{align-items:center;margin-top:8px}
+.notes-list{width:var(--list-w);flex:0 0 auto;height:100%;border-right:.5px solid var(--border)}
+.fab{bottom:24px;right:24px}
+.action-bar{bottom:0;left:var(--sidebar-w);width:var(--list-w);z-index:25}
+.editor{position:relative;flex:1;transform:translateX(0);z-index:20;border-left:.5px solid var(--border)}
+.editor:not(.open){display:flex}
+.menu-dropdown{right:var(--ph);top:70px}
+.color-picker{left:calc(var(--sidebar-w) + var(--ph));right:var(--ph)}
+.toast{bottom:50%;transform:translate(-50%,-50%) translateY(20px)}
+.toast.visible{transform:translate(-50%,-50%) translateY(0)}
+:root{--fs-et:clamp(24px,5vw,30px);--fs-eb:clamp(16px,3.5vw,20px);--ph:clamp(14px,3vw,18px)}
+}
+@media(orientation:landscape) and (max-width:700px){:root{--sidebar-w:clamp(100px,20vw,120px);--list-w:clamp(180px,30vw,220px)}}
+</style></head><body>
+<div class="app">
+<header><button id="cancelSelectBtn" onclick="cancelSelection()">Cancelar</button><h1>Awooo</h1><div class="menu-btn" onclick="toggleMenu(event)"><span></span><span></span><span></span></div></header>
+<div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"><div class="menu-dropdown" onclick="event.stopPropagation()"><div id="selectMenuItem" class="menu-item" onclick="toggleSelectionMode()">Selecionar</div><div id="themeMenuItem" class="menu-item" onclick="toggleTheme()">Tema Escuro</div></div></div>
+<div id="notesList" class="notes-list"></div>
+<div id="toast" class="toast">✓ Nota salva</div>
+<button class="fab" id="fabButton" onclick="createNewNote()">+</button>
+<div id="colorPicker" class="color-picker" onclick="event.stopPropagation()"><div class="color-option" style="background:transparent;border:2px solid var(--border)" onclick="setNoteColor(null)"></div><div class="color-option" style="background:var(--c-red)" onclick="setNoteColor('#ff3b30')"></div><div class="color-option" style="background:var(--c-orange)" onclick="setNoteColor('#ff9500')"></div><div class="color-option" style="background:var(--c-yellow)" onclick="setNoteColor('#ffcc00')"></div><div class="color-option" style="background:var(--c-green)" onclick="setNoteColor('#34c759')"></div><div class="color-option" style="background:var(--c-blue)" onclick="setNoteColor('#007aff')"></div><div class="color-option" style="background:var(--c-purple)" onclick="setNoteColor('#af52de')"></div><div class="color-option" style="background:var(--c-pink)" onclick="setNoteColor('#ff2d55')"></div></div>
+<div id="actionBar" class="action-bar"><button class="pin-btn" onclick="pinSelected()"><span class="pin-icon"></span>Fixar</button><button id="colorToggleBtn" onclick="toggleColorPicker()"><span class="palette-icon"><span></span><span></span><span></span></span>Cor</button><button class="delete-btn" onclick="deleteSelected()"><span class="trash-icon"></span>Apagar</button></div>
+<div id="confirmDialog" class="confirm-dialog" onclick="closeConfirmDialog()"><div class="confirm-box" onclick="event.stopPropagation()"><h3>Apagar?</h3><p id="confirmMessage"></p><button class="confirm-delete" onclick="confirmDelete()">Apagar</button><button class="confirm-cancel" onclick="closeConfirmDialog()">Cancelar</button></div></div>
+<div id="editor" class="editor"><div class="editor-header"><div class="editor-tools"><button id="boldBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('bold')">B</button><button id="italicBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('italic')">I</button><button id="underlineBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('underline')">U</button><div class="tool-sep"></div><button id="checklistBtn" class="tool-btn" onmousedown="event.preventDefault();insertChecklist()">✓</button></div><span onclick="saveNote()" style="font-weight:600;color:var(--accent);cursor:pointer;padding:8px 12px;border-radius:10px;transition:background .15s;letter-spacing:0.3px" onmousedown="event.preventDefault()">Pronto</span></div><div class="editor-content"><div id="editorTitle" class="editor-title" contenteditable="true" spellcheck="false"></div><div id="editorBody" class="editor-body" contenteditable="true" spellcheck="false"></div></div></div>
+</div>
+<script>
+let notes=JSON.parse(localStorage.getItem('awoo'))||[];
+let editIdx=null,selMode=false,selSet=new Set(),lpTimer=null,currentColorNote=null,isLoading=true;
+window.addEventListener('popstate',function(e){
+  const editor=document.getElementById('editor');
+  const menuOverlay=document.getElementById('menuOverlay');
+  if(editor.classList.contains('open')){editor.classList.remove('open');history.pushState(null,'',window.location.href)}
+  else if(menuOverlay.classList.contains('open')){closeMenu();history.pushState(null,'',window.location.href)}
+  else if(selMode){cancelSelection();history.pushState(null,'',window.location.href)}
+});
+history.pushState(null,'',window.location.href);
+function blurActiveElement(){if(document.activeElement&&document.activeElement.blur)document.activeElement.blur()}
+function showToast(msg){
+  const toast=document.getElementById('toast');
+  toast.innerText='✓ '+msg;toast.classList.add('visible');
+  setTimeout(()=>toast.classList.remove('visible'),2000);
+}
+function updateThemeItem(){document.getElementById('themeMenuItem').innerText=document.body.getAttribute('data-theme')==='dark'?'Tema Claro':'Tema Escuro'}
+function toggleTheme(){const d=document.body.getAttribute('data-theme')==='dark';document.body.setAttribute('data-theme',d?'light':'dark');localStorage.setItem('awoo_theme',d?'light':'dark');updateThemeItem();closeMenu()}
+function sort(){notes.sort((a,b)=>{if(a.pinned!==b.pinned)return a.pinned?-1:1;return(a.title||'').toLowerCase()<(b.title||'').toLowerCase()?-1:1})}
+function persist(){localStorage.setItem('awoo',JSON.stringify(notes));render()}
+function esc(s){if(!s)return '';return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))}
+function renderSkeleton(){
+  const c=document.getElementById('notesList');c.innerHTML='';
+  for(let i=0;i<5;i++){c.innerHTML+='<div class="skeleton-item"><div class="skeleton-title"></div><div class="skeleton-date"></div></div>';}
+}
+function render(){
+  if(isLoading){renderSkeleton();return}
+  sort();const c=document.getElementById('notesList');c.innerHTML='';
+  notes.forEach((n,i)=>{
+    const d=document.createElement('div');
+    d.className='note-item'+(selMode&&selSet.has(i)?' selected':'');
+    if(n.color) d.style.setProperty('--note-color',n.color);
+    d.addEventListener('click',()=>selMode?tapNote(i):openNote(i));
+    d.addEventListener('touchstart',()=>{lpTimer=setTimeout(()=>{if(!selMode){enableSel();tapNote(i)}},400)});
+    d.addEventListener('touchend',()=>clearTimeout(lpTimer));
+    d.addEventListener('touchmove',()=>clearTimeout(lpTimer));
+    d.innerHTML=`<div class="note-title">${n.pinned?'● ':''}${n.title||'Sem Título'}</div><div class="note-date">${n.date||''}</div>`;
+    c.appendChild(d);
+  });
+  document.getElementById('selectMenuItem').classList.toggle('disabled',notes.length===0);
+}
+function enableSel(){if(!notes.length)return;selMode=true;document.getElementById('cancelSelectBtn').classList.add('visible');document.getElementById('fabButton').classList.add('hidden');render();history.pushState(null,'',window.location.href)}
+function cancelSelection(){selMode=false;selSet.clear();document.getElementById('cancelSelectBtn').classList.remove('visible');document.getElementById('fabButton').classList.remove('hidden');document.getElementById('actionBar').classList.remove('visible');document.getElementById('colorPicker').classList.remove('visible');render()}
+function tapNote(i){selSet.has(i)?selSet.delete(i):selSet.add(i);document.getElementById('actionBar').classList.toggle('visible',selSet.size>0);render()}
+function toggleSelectionMode(){if(!notes.length)return;selMode?cancelSelection():enableSel();closeMenu()}
+function deleteSelected(){
+  if(selSet.size===0) return;
+  document.getElementById('confirmMessage').innerText=`Apagar ${selSet.size} nota(s)?`;
+  document.getElementById('confirmDialog').classList.add('visible');
+}
+function confirmDelete(){
+  notes=notes.filter((_,i)=>!selSet.has(i));persist();cancelSelection();
+  document.getElementById('confirmDialog').classList.remove('visible');
+  showToast('Nota(s) apagada(s)');
+}
+function closeConfirmDialog(){document.getElementById('confirmDialog').classList.remove('visible')}
+function pinSelected(){for(let i of selSet)if(notes[i])notes[i].pinned=!notes[i].pinned;persist();cancelSelection();showToast('Nota(s) atualizada(s)')}
+function toggleColorPicker(){
+  const picker=document.getElementById('colorPicker');
+  if(picker.classList.contains('visible')){picker.classList.remove('visible')}
+  else{if(selSet.size===0) return;currentColorNote=Array.from(selSet)[0];picker.classList.add('visible')}
+}
+function setNoteColor(color){
+  if(currentColorNote!==null&&notes[currentColorNote]){
+    for(let i of selSet) if(notes[i]) notes[i].color=color;
+    persist();cancelSelection();
+  }
+  document.getElementById('colorPicker').classList.remove('visible');
+  currentColorNote=null;
+}
+function createNewNote(){editIdx=null;document.getElementById('editorTitle').innerHTML='';document.getElementById('editorBody').innerHTML='';openEditor()}
+function openNote(i){editIdx=i;document.getElementById('editorTitle').innerHTML=notes[i].title||'';document.getElementById('editorBody').innerHTML=notes[i].text||'';openEditor()}
+function openEditor(){document.getElementById('editor').classList.add('open');history.pushState(null,'',window.location.href);setTimeout(updateToolbar,50)}
+function saveNote(){
+  blurActiveElement();
+  const t=document.getElementById('editorTitle').innerHTML;
+  const b=document.getElementById('editorBody').innerHTML;
+  if(t||b){
+    const n={title:t,text:b,date:new Date().toLocaleDateString(),pinned:editIdx!==null?notes[editIdx].pinned:false,color:editIdx!==null?notes[editIdx].color:null};
+    editIdx!==null?notes[editIdx]=n:notes.push(n);persist()
+  }
+  document.getElementById('editor').classList.remove('open');
+  showToast('Nota salva');
+}
+function applyFormat(cmd){document.execCommand(cmd,false,null);document.activeElement.focus();updateToolbar()}
+function insertChecklist(){
+  if(document.activeElement.id==='editorTitle')return;
+  const s=window.getSelection();if(!s.rangeCount)return;
+  let n=s.getRangeAt(0).startContainer;
+  while(n&&n.id!=='editorBody'&&n.nodeName!=='DIV')n=n.parentNode;
+  if(!n||n.id==='editorBody'){document.execCommand('formatBlock',false,'div');n=s.getRangeAt(0).startContainer;while(n&&n.nodeName!=='DIV')n=n.parentNode}
+  if(n){n.classList.toggle('checklist-item');if(n.classList.contains('checklist-item'))n.classList.remove('done')}
+  updateToolbar()
+}
+function updateToolbar(){
+  const bB=document.getElementById('boldBtn'),iB=document.getElementById('italicBtn'),uB=document.getElementById('underlineBtn'),cB=document.getElementById('checklistBtn');
+  bB.classList.toggle('active',document.queryCommandState('bold'));
+  iB.classList.toggle('active',document.queryCommandState('italic'));
+  uB.classList.toggle('active',document.queryCommandState('underline'));
+  let ck=false;
+  const s=window.getSelection();if(s.rangeCount){let n=s.getRangeAt(0).startContainer;while(n&&n.id!=='editorBody'&&n.nodeName!=='DIV')n=n.parentNode;ck=!!(n&&n.classList&&n.classList.contains('checklist-item'))}
+  cB.classList.toggle('active',ck)
+}
+function onKeydown(e){
+  if(document.activeElement.id!=='editorBody')return;
+  const s=window.getSelection();if(!s.rangeCount)return;
+  const r=s.getRangeAt(0);let n=r.startContainer;
+  while(n&&n.nodeType===3)n=n.parentNode;
+  while(n&&n.id!=='editorBody'&&n.nodeName!=='DIV')n=n.parentNode;
+  const cl=n&&n.classList&&n.classList.contains('checklist-item');
+  if(e.key==='Backspace'&&cl){const at0=r.startOffset===0&&(r.startContainer===n||r.startContainer.parentNode===n);if(at0){e.preventDefault();if(n.innerText.trim()===''){const p=n.previousSibling;n.remove();if(p){const rr=document.createRange();rr.setStart(p,p.childNodes.length);rr.collapse(true);s.removeAllRanges();s.addRange(rr)}}}return}
+  if(e.key==='Enter'&&cl){e.preventDefault();const nd=document.createElement('div');nd.innerHTML='<br>';n.parentNode.insertBefore(nd,n.nextSibling);const rr=document.createRange();rr.setStart(nd,0);rr.collapse(true);s.removeAllRanges();s.addRange(rr);return}
+  setTimeout(updateToolbar,10)
+}
+function onBodyClick(e){
+  let t=e.target;
+  while(t&&t!==document.getElementById('editorBody')){if(t.classList&&t.classList.contains('checklist-item')){if(e.clientX-t.getBoundingClientRect().left<32){e.preventDefault();t.classList.toggle('done')}break}t=t.parentNode}
+  updateToolbar()
+}
+function toggleMenu(e){e.stopPropagation();const overlay=document.getElementById('menuOverlay');overlay.classList.toggle('open');if(overlay.classList.contains('open'))history.pushState(null,'',window.location.href)}
+function closeMenu(){document.getElementById('menuOverlay').classList.remove('open')}
+function init(){
+  document.body.setAttribute('data-theme',localStorage.getItem('awoo_theme')||'light');updateThemeItem();
+  renderSkeleton();setTimeout(()=>{isLoading=false;render();},300);
+  const T=document.getElementById('editorTitle'),B=document.getElementById('editorBody');
+  T.addEventListener('focus',updateToolbar);T.addEventListener('keyup',updateToolbar);T.addEventListener('mouseup',updateToolbar);
+  B.addEventListener('focus',updateToolbar);B.addEventListener('keyup',updateToolbar);B.addEventListener('mouseup',updateToolbar);B.addEventListener('keydown',onKeydown);B.addEventListener('click',onBodyClick);
+  T.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();B.focus()}});
+  document.addEventListener('click',(e)=>{if(!e.target.closest('.menu-dropdown')&&!e.target.closest('.menu-btn'))closeMenu();if(!e.target.closest('.color-picker')&&!e.target.closest('#colorToggleBtn'))document.getElementById('colorPicker').classList.remove('visible')})
+}
+init()
+</script>
+</body></html>
