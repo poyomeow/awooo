@@ -6,12 +6,12 @@
 --bg:#f2f2f7;--card:#fff;--text:#1c1c1e;--sub:#8e8e93;--border:#c6c6c8;
 --accent:#636366;--danger:#ff3b30;--tool:#e5e5ea;--sel:#d1d1d6;
 --glass:rgba(242,242,247,0.9);--glass-menu:rgba(255,255,255,0.93);
---hh:56px;--ph:16px;
---fs:clamp(17px,4.5vw,22px);
---fs-sm:clamp(14px,3.8vw,18px);
---fs-et:clamp(26px,6vw,34px);
---fs-eb:clamp(17px,4.5vw,22px);
---sidebar-w:120px;--list-w:200px;
+--hh:50px;--ph:14px;
+--fs:clamp(15px,3.8vw,17px);
+--fs-sm:clamp(12px,3.2vw,14px);
+--fs-et:clamp(20px,4.5vw,24px);
+--fs-eb:clamp(15px,3.8vw,17px);
+--sidebar-w:110px;--list-w:180px;
 --c-red:#ff3b30;--c-orange:#ff9500;--c-yellow:#ffcc00;--c-green:#34c759;
 --c-blue:#007aff;--c-purple:#af52de;--c-pink:#ff2d55;--c-gray:#8e8e93;
 }
@@ -27,7 +27,7 @@ html,body{height:100%;width:100%;overflow:hidden;position:fixed}
 body{
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 background:#111;color:var(--text);display:flex;justify-content:center;align-items:stretch;
-letter-spacing:0.3px}
+letter-spacing:0.2px}
 .app{
 width:100%;max-width:100%;margin:0 auto;background:var(--bg);
 display:flex;flex-direction:column;position:relative;overflow:hidden;
@@ -40,105 +40,109 @@ backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
 background:var(--glass)}
 header h1{
 font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:-0.5px;
-font-size:clamp(30px,7vw,40px);position:absolute;
+font-size:clamp(24px,5.5vw,30px);position:absolute;
 left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--text)}
 header button{
-background:none;border:none;font-size:clamp(15px,4vw,18px);color:var(--danger);
-cursor:pointer;visibility:hidden;position:relative;z-index:1;padding:6px 10px;
-border-radius:8px;transition:background .15s;letter-spacing:0.3px}
+background:none;border:none;font-size:clamp(13px,3.2vw,15px);color:var(--danger);
+cursor:pointer;visibility:hidden;position:relative;z-index:1;padding:4px 8px;
+border-radius:6px;transition:background .15s;letter-spacing:0.2px}
 header button:active{background:rgba(255,59,48,.1)}
 header button.visible{visibility:visible}
 .menu-btn{
-width:clamp(44px,6vw,50px);height:clamp(44px,6vw,50px);display:flex;flex-direction:column;
-justify-content:center;align-items:center;gap:5px;cursor:pointer;
-position:relative;z-index:1;border-radius:10px;background:transparent}
+width:clamp(36px,4.5vw,40px);height:clamp(36px,4.5vw,40px);display:flex;flex-direction:column;
+justify-content:center;align-items:center;gap:4px;cursor:pointer;
+position:relative;z-index:1;border-radius:8px;background:transparent}
 .menu-btn:active{background:var(--sel)}
-.menu-btn span{display:block;width:clamp(22px,4vw,26px);height:2.5px;background:var(--accent);border-radius:2px}
+.menu-btn span{display:block;width:clamp(18px,3.2vw,20px);height:2px;background:var(--accent);border-radius:2px}
 .notes-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .note-item{
-padding:clamp(18px,4vh,22px) var(--ph);border-bottom:.5px solid var(--border);
+padding:clamp(12px,2.5vh,16px) var(--ph);border-bottom:.5px solid var(--border);
 background:var(--bg);cursor:pointer;position:relative}
 .note-item::after{
-content:'';position:absolute;right:0;top:0;bottom:0;width:clamp(5px,1.5vw,6px);
+content:'';position:absolute;right:0;top:0;bottom:0;width:clamp(3px,1vw,4px);
 background:var(--note-color,transparent);border-radius:2px 0 0 2px}
 .note-item.selected{background:var(--sel)}
-.note-title{font-size:var(--fs);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);margin-bottom:clamp(4px,1vh,6px);letter-spacing:0.3px}
+.note-title{
+font-size:var(--fs);font-weight:600;color:var(--text);margin-bottom:clamp(2px,0.5vh,4px);
+letter-spacing:0.2px;
+overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+white-space:normal;word-break:break-word}
 .note-title u{text-decoration:underline;text-underline-offset:2px}
-.note-date{font-size:var(--fs-sm);color:var(--sub);letter-spacing:0.3px}
+.note-date{font-size:var(--fs-sm);color:var(--sub);letter-spacing:0.2px}
 .skeleton-item{
-padding:clamp(18px,4vh,22px) var(--ph);border-bottom:.5px solid var(--border);
-background:var(--bg);display:flex;flex-direction:column;gap:clamp(8px,2vh,10px)}
-.skeleton-title{width:70%;height:clamp(18px,3vh,22px);background:var(--sel);border-radius:6px;animation:pulse 1.5s infinite}
-.skeleton-date{width:40%;height:clamp(14px,2.5vh,16px);background:var(--sel);border-radius:4px;animation:pulse 1.5s infinite}
+padding:clamp(12px,2.5vh,16px) var(--ph);border-bottom:.5px solid var(--border);
+background:var(--bg);display:flex;flex-direction:column;gap:clamp(5px,1.2vh,7px)}
+.skeleton-title{width:70%;height:clamp(14px,2.2vh,16px);background:var(--sel);border-radius:5px;animation:pulse 1.5s infinite}
+.skeleton-date{width:40%;height:clamp(11px,1.8vh,13px);background:var(--sel);border-radius:4px;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:.5}50%{opacity:.8}}
 .fab{
-position:absolute;bottom:clamp(24px,5vh,32px);right:clamp(24px,5vw,32px);
-width:clamp(70px,10vw,80px);height:clamp(70px,10vw,80px);
-border-radius:clamp(20px,3vw,24px);background:var(--accent);color:#fff;border:none;
-font-size:clamp(40px,7vw,48px);font-weight:300;cursor:pointer;display:flex;
+position:absolute;bottom:clamp(18px,3.5vh,24px);right:clamp(18px,3.5vw,24px);
+width:clamp(55px,7.5vw,65px);height:clamp(55px,7.5vw,65px);
+border-radius:clamp(14px,2.2vw,18px);background:var(--accent);color:#fff;border:none;
+font-size:clamp(30px,5.5vw,38px);font-weight:300;cursor:pointer;display:flex;
 align-items:center;justify-content:center;
-box-shadow:0 8px 20px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.2) inset,0 2px 4px rgba(255,255,255,.3) inset;
+box-shadow:0 6px 16px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.2) inset,0 2px 4px rgba(255,255,255,.3) inset;
 z-index:10;transition:transform .2s,background .35s,box-shadow .2s}
-.fab:active{transform:scale(.94);box-shadow:0 4px 12px rgba(0,0,0,.2),0 0 0 1px rgba(255,255,255,.15) inset}
+.fab:active{transform:scale(.94);box-shadow:0 4px 10px rgba(0,0,0,.2),0 0 0 1px rgba(255,255,255,.15) inset}
 .fab.hidden{display:none}
 .action-bar{
-position:absolute;bottom:0;width:100%;height:clamp(70px,10vh,80px);background:var(--card);
-display:none;align-items:center;padding:0 var(--ph);gap:clamp(8px,2vw,12px);
+position:absolute;bottom:0;width:100%;height:clamp(55px,7.5vh,65px);background:var(--card);
+display:none;align-items:center;padding:0 var(--ph);gap:clamp(5px,1.2vw,8px);
 border-top:.5px solid var(--border);z-index:20;
 backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
 background:var(--glass)}
 .action-bar.visible{display:flex}
 .action-bar button{
-flex:1;height:clamp(52px,7vh,60px);border:none;border-radius:14px;font-weight:600;
-font-size:clamp(17px,4vw,20px);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
-box-shadow:0 2px 8px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset,0 1px 3px rgba(255,255,255,.2) inset;
-transition:transform .15s,box-shadow .15s;letter-spacing:0.3px}
-.action-bar button:active{transform:scale(.97);box-shadow:0 1px 4px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.08) inset}
+flex:1;height:clamp(40px,5.5vh,48px);border:none;border-radius:10px;font-weight:600;
+font-size:clamp(14px,3.2vw,16px);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;
+box-shadow:0 2px 6px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset,0 1px 2px rgba(255,255,255,.2) inset;
+transition:transform .15s,box-shadow .15s;letter-spacing:0.2px}
+.action-bar button:active{transform:scale(.97);box-shadow:0 1px 3px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.08) inset}
 .action-bar .pin-btn{background:var(--accent);color:#fff}
 .action-bar .delete-btn{background:var(--danger);color:#fff}
-.pin-icon{position:relative;width:clamp(16px,3vw,18px);height:clamp(16px,3vw,18px)}
-.pin-icon::before{content:'';position:absolute;width:clamp(12px,2.5vw,14px);height:clamp(12px,2.5vw,14px);border-radius:50%;background:#fff;top:0;left:2px}
-.pin-icon::after{content:'';position:absolute;width:2px;height:clamp(8px,1.5vh,10px);background:#fff;bottom:-6px;left:clamp(7px,1.5vw,8px);border-radius:1px}
-.palette-icon{display:flex;gap:clamp(4px,1vw,5px)}
-.palette-icon span{width:clamp(10px,2.5vw,12px);height:clamp(10px,2.5vw,12px);border-radius:50%}
+.pin-icon{position:relative;width:clamp(12px,2.2vw,14px);height:clamp(12px,2.2vw,14px)}
+.pin-icon::before{content:'';position:absolute;width:clamp(9px,1.8vw,11px);height:clamp(9px,1.8vw,11px);border-radius:50%;background:#fff;top:0;left:2px}
+.pin-icon::after{content:'';position:absolute;width:2px;height:clamp(6px,1vh,8px);background:#fff;bottom:-5px;left:clamp(5px,1vw,6px);border-radius:1px}
+.palette-icon{display:flex;gap:clamp(2px,0.6vw,3px)}
+.palette-icon span{width:clamp(7px,1.8vw,9px);height:clamp(7px,1.8vw,9px);border-radius:50%}
 .palette-icon span:nth-child(1){background:#ff3b30}
 .palette-icon span:nth-child(2){background:#ffcc00}
 .palette-icon span:nth-child(3){background:#34c759}
-.trash-icon{position:relative;width:clamp(16px,3vw,18px);height:clamp(18px,3.5vw,20px)}
-.trash-icon::before{content:'';position:absolute;top:0;left:1px;width:clamp(14px,2.8vw,16px);height:clamp(3px,0.8vh,4px);background:#fff;border-radius:2px 2px 0 0}
-.trash-icon::after{content:'';position:absolute;top:4px;left:2px;width:clamp(12px,2.5vw,14px);height:clamp(14px,2.8vh,16px);background:#fff;border-radius:0 0 3px 3px}
+.trash-icon{position:relative;width:clamp(12px,2.2vw,14px);height:clamp(14px,2.5vw,16px)}
+.trash-icon::before{content:'';position:absolute;top:0;left:1px;width:clamp(10px,2vw,12px);height:clamp(2px,0.5vh,3px);background:#fff;border-radius:2px 2px 0 0}
+.trash-icon::after{content:'';position:absolute;top:3px;left:2px;width:clamp(9px,1.8vw,11px);height:clamp(11px,2vh,13px);background:#fff;border-radius:0 0 3px 3px}
 .menu-overlay{
 position:absolute;inset:0;background:rgba(0,0,0,0.3);z-index:30;
 opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;
 backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 .menu-overlay.open{opacity:1;visibility:visible}
 .menu-dropdown{
-position:absolute;top:calc(var(--hh) + 8px);right:var(--ph);
-background:var(--glass-menu);border-radius:16px;min-width:clamp(220px,50vw,280px);overflow:hidden;
-box-shadow:0 8px 30px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.1) inset;
+position:absolute;top:calc(var(--hh) + 6px);right:var(--ph);
+background:var(--glass-menu);border-radius:14px;min-width:clamp(180px,42vw,220px);overflow:hidden;
+box-shadow:0 8px 25px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.1) inset;
 transform-origin:top right;transform:scale(.78);opacity:0;pointer-events:none;
 transition:transform .2s cubic-bezier(.34,1.45,.64,1),opacity .14s ease;
 backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-[data-theme=dark] .menu-dropdown{box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05) inset}
+[data-theme=dark] .menu-dropdown{box-shadow:0 8px 25px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05) inset}
 .menu-overlay.open .menu-dropdown{transform:scale(1);opacity:1;pointer-events:auto}
 .menu-item{
-padding:clamp(18px,3vh,22px) var(--ph);font-size:clamp(18px,4.5vw,22px);cursor:pointer;color:var(--text);
-border-bottom:.5px solid rgba(120,120,128,.18);transition:background .12s;letter-spacing:0.3px}
+padding:clamp(14px,2.2vh,18px) var(--ph);font-size:clamp(16px,3.8vw,19px);cursor:pointer;color:var(--text);
+border-bottom:.5px solid rgba(120,120,128,.18);transition:background .12s;letter-spacing:0.2px}
 .menu-item:last-child{border-bottom:none}
 .menu-item:active{background:rgba(120,120,128,.14)}
 .menu-item.disabled{opacity:.3;pointer-events:none}
 .color-picker{
-position:absolute;bottom:clamp(100px,15vh,120px);left:var(--ph);right:var(--ph);
-background:var(--card);border-radius:18px;padding:clamp(18px,3vh,22px);
-box-shadow:0 8px 30px rgba(0,0,0,.2);z-index:50;
-display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,3vw,18px);border:0.5px solid var(--border);
+position:absolute;bottom:clamp(70px,11vh,90px);left:var(--ph);right:var(--ph);
+background:var(--card);border-radius:16px;padding:clamp(14px,2.2vh,18px);
+box-shadow:0 8px 25px rgba(0,0,0,.2);z-index:50;
+display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,2.2vw,14px);border:0.5px solid var(--border);
 transform:scale(.9);opacity:0;visibility:hidden;pointer-events:none;
 transition:transform .2s cubic-bezier(.34,1.45,.64,1),opacity .14s ease,visibility .14s ease}
 .color-picker.visible{transform:scale(1);opacity:1;visibility:visible;pointer-events:auto}
 .color-option{
-aspect-ratio:1;border-radius:14px;cursor:pointer;border:3px solid transparent;
+aspect-ratio:1;border-radius:12px;cursor:pointer;border:3px solid transparent;
 transition:transform .15s,box-shadow .15s;
-box-shadow:0 2px 8px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset}
+box-shadow:0 2px 6px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset}
 .color-option:active{transform:scale(.95)}
 .color-option.selected{border-color:var(--text)}
 .editor{
@@ -152,34 +156,35 @@ align-items:center;background:var(--glass);border-bottom:.5px solid rgba(120,120
 flex-shrink:0;position:sticky;top:0;z-index:100;
 backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
 box-shadow:0 1px 0 rgba(0,0,0,.02),0 0 0 1px rgba(255,255,255,.05) inset}
-.editor-tools{display:flex;gap:clamp(8px,2vw,10px);align-items:center}
-.tool-sep{width:1px;height:clamp(28px,5vh,32px);background:var(--border);margin:0 4px;flex-shrink:0}
+.editor-tools{display:flex;gap:clamp(5px,1.2vw,7px);align-items:center}
+.tool-sep{width:1px;height:clamp(22px,3.5vh,26px);background:var(--border);margin:0 3px;flex-shrink:0}
 .tool-btn{
-width:clamp(44px,7vw,50px);height:clamp(44px,7vw,50px);border-radius:10px;border:1px solid var(--border);
-background:var(--tool);color:var(--text);font-weight:700;font-size:clamp(18px,4.5vw,22px);
+width:clamp(36px,5.5vw,40px);height:clamp(36px,5.5vw,40px);border-radius:8px;border:1px solid var(--border);
+background:var(--tool);color:var(--text);font-weight:700;font-size:clamp(16px,3.8vw,19px);
 cursor:pointer;display:flex;align-items:center;justify-content:center;
-box-shadow:0 2px 6px rgba(0,0,0,.06),0 0 0 1px rgba(255,255,255,.1) inset,0 1px 2px rgba(255,255,255,.15) inset;
+box-shadow:0 2px 5px rgba(0,0,0,.06),0 0 0 1px rgba(255,255,255,.1) inset,0 1px 2px rgba(255,255,255,.15) inset;
 transition:transform .15s,box-shadow .15s,background .15s}
 .tool-btn:active{transform:scale(.94)}
 .tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);
-box-shadow:0 2px 8px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.2) inset}
+box-shadow:0 2px 6px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.2) inset}
 .tool-btn.disabled{opacity:.3;pointer-events:none}
-#checklistBtn{font-weight:700;font-size:clamp(22px,5vw,26px);line-height:1}
+#checklistBtn{font-weight:700;font-size:clamp(18px,4vw,22px);line-height:1}
 .editor-content{flex:1;display:flex;flex-direction:column;overflow-y:auto}
 .editor-title{
-font-size:var(--fs-et);font-weight:700;padding:clamp(22px,4vh,28px) var(--ph) clamp(18px,3vh,22px);
-outline:none;min-height:clamp(80px,12vh,100px);border-bottom:.5px solid var(--border);
-color:var(--text);background:var(--card);letter-spacing:0.3px}
-.editor-title:empty:before{content:'Título da nota';color:var(--sub);font-weight:400;letter-spacing:0.3px}
+font-size:var(--fs-et);font-weight:700;padding:clamp(16px,2.5vh,20px) var(--ph) clamp(12px,2vh,16px);
+outline:none;min-height:clamp(60px,9vh,75px);border-bottom:.5px solid var(--border);
+color:var(--text);background:var(--card);letter-spacing:0.2px;
+white-space:normal;word-break:break-word}
+.editor-title:empty:before{content:'Título da nota';color:var(--sub);font-weight:400;letter-spacing:0.2px}
 .editor-body{
-flex:1;font-size:var(--fs-eb);padding:clamp(18px,3vh,22px) var(--ph) clamp(80px,12vh,100px);outline:none;
-line-height:1.6;white-space:pre-wrap;color:var(--text);background:var(--card);min-height:clamp(150px,25vh,200px);
-letter-spacing:0.3px}
-.editor-body:empty:before{content:'Escreva algo incrível...';color:var(--sub);font-weight:400;letter-spacing:0.3px}
-.checklist-item{position:relative;padding-left:clamp(38px,8vw,44px);min-height:clamp(32px,5vh,38px);margin-bottom:clamp(10px,2vh,12px);display:block}
+flex:1;font-size:var(--fs-eb);padding:clamp(12px,2vh,16px) var(--ph) clamp(50px,8vh,70px);outline:none;
+line-height:1.5;white-space:pre-wrap;color:var(--text);background:var(--card);min-height:clamp(100px,18vh,130px);
+letter-spacing:0.2px;word-break:break-word}
+.editor-body:empty:before{content:'Escreva algo incrível...';color:var(--sub);font-weight:400;letter-spacing:0.2px}
+.checklist-item{position:relative;padding-left:clamp(30px,6.5vw,36px);min-height:clamp(26px,4vh,30px);margin-bottom:clamp(7px,1.2vh,9px);display:block;word-break:break-word}
 .checklist-item::before{
-content:'';position:absolute;left:3px;top:3px;width:clamp(24px,5vw,28px);height:clamp(24px,5vw,28px);
-border:2px solid var(--accent);border-radius:6px;background:var(--card)}
+content:'';position:absolute;left:2px;top:2px;width:clamp(20px,4vw,24px);height:clamp(20px,4vw,24px);
+border:2px solid var(--accent);border-radius:5px;background:var(--card)}
 .checklist-item.done{text-decoration:line-through;opacity:.65}
 .checklist-item.done::before{background:var(--accent)}
 .confirm-dialog{
@@ -189,47 +194,47 @@ backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
 opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
 .confirm-dialog.visible{opacity:1;visibility:visible}
 .confirm-box{
-background:var(--card);border-radius:20px;padding:clamp(28px,5vh,32px);max-width:clamp(320px,80vw,400px);
+background:var(--card);border-radius:18px;padding:clamp(22px,3.5vh,26px);max-width:clamp(280px,70vw,330px);
 width:90%;text-align:center;
-box-shadow:0 20px 40px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.1) inset;
+box-shadow:0 18px 35px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.1) inset;
 transform:scale(.9);transition:transform .2s cubic-bezier(.34,1.45,.64,1)}
 .confirm-dialog.visible .confirm-box{transform:scale(1)}
-.confirm-box h3{font-size:clamp(22px,5vw,28px);margin-bottom:clamp(10px,2vh,14px);color:var(--text);letter-spacing:0.3px}
-.confirm-box p{font-size:clamp(18px,4vw,22px);color:var(--sub);margin-bottom:clamp(28px,5vh,32px);letter-spacing:0.3px}
+.confirm-box h3{font-size:clamp(18px,4vw,24px);margin-bottom:clamp(7px,1.2vh,10px);color:var(--text);letter-spacing:0.2px}
+.confirm-box p{font-size:clamp(15px,3.2vw,18px);color:var(--sub);margin-bottom:clamp(20px,3.5vh,24px);letter-spacing:0.2px}
 .confirm-box button{
-width:100%;padding:clamp(16px,3vh,20px);border:none;border-radius:14px;font-size:clamp(18px,4.5vw,22px);
-font-weight:600;cursor:pointer;margin-bottom:8px;
-box-shadow:0 2px 8px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset;
-letter-spacing:0.3px}
+width:100%;padding:clamp(12px,2.2vh,16px);border:none;border-radius:12px;font-size:clamp(16px,3.5vw,19px);
+font-weight:600;cursor:pointer;margin-bottom:7px;
+box-shadow:0 2px 6px rgba(0,0,0,.1),0 0 0 1px rgba(255,255,255,.15) inset;
+letter-spacing:0.2px}
 .confirm-box button:active{transform:scale(.97)}
 .confirm-box .confirm-delete{background:var(--danger);color:#fff}
 .confirm-box .confirm-cancel{background:transparent;color:var(--accent);box-shadow:none}
 .confirm-box .confirm-cancel:active{background:rgba(120,120,128,.1)}
 .toast{
-position:absolute;bottom:clamp(100px,15vh,120px);left:50%;transform:translateX(-50%) translateY(20px);
-background:var(--card);color:var(--text);padding:clamp(14px,3vh,18px) clamp(28px,6vw,36px);
-border-radius:40px;font-size:clamp(18px,4.5vw,22px);font-weight:500;letter-spacing:0.3px;
-box-shadow:0 8px 20px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.1) inset;
+position:absolute;bottom:clamp(80px,12vh,100px);left:50%;transform:translateX(-50%) translateY(15px);
+background:var(--card);color:var(--text);padding:clamp(12px,2.2vh,16px) clamp(24px,5vw,30px);
+border-radius:35px;font-size:clamp(16px,3.8vw,20px);font-weight:500;letter-spacing:0.2px;
+box-shadow:0 6px 18px rgba(0,0,0,.15),0 0 0 1px rgba(255,255,255,.1) inset;
 z-index:60;opacity:0;visibility:hidden;white-space:nowrap;
 transition:transform .3s cubic-bezier(.34,1.45,.64,1),opacity .2s ease,visibility .2s ease}
 .toast.visible{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
 @media(orientation:landscape){
 .app{flex-direction:row;max-width:100%;height:100dvh}
-header{width:var(--sidebar-w);height:100%;flex-direction:column;justify-content:flex-start;padding:16px 0 0 0;border-right:.5px solid var(--border);border-bottom:none;flex-shrink:0}
-header h1{position:static;transform:none;margin:0 0 20px 0}
-.menu-btn{align-items:center;margin-top:8px}
+header{width:var(--sidebar-w);height:100%;flex-direction:column;justify-content:flex-start;padding:14px 0 0 0;border-right:.5px solid var(--border);border-bottom:none;flex-shrink:0}
+header h1{position:static;transform:none;margin:0 0 18px 0}
+.menu-btn{align-items:center;margin-top:6px}
 .notes-list{width:var(--list-w);flex:0 0 auto;height:100%;border-right:.5px solid var(--border)}
-.fab{bottom:24px;right:24px}
+.fab{bottom:18px;right:18px}
 .action-bar{bottom:0;left:var(--sidebar-w);width:var(--list-w);z-index:25}
 .editor{position:relative;flex:1;transform:translateX(0);z-index:20;border-left:.5px solid var(--border)}
 .editor:not(.open){display:flex}
-.menu-dropdown{right:var(--ph);top:70px}
+.menu-dropdown{right:var(--ph);top:60px}
 .color-picker{left:calc(var(--sidebar-w) + var(--ph));right:var(--ph)}
-.toast{bottom:50%;transform:translate(-50%,-50%) translateY(20px)}
+.toast{bottom:50%;transform:translate(-50%,-50%) translateY(15px)}
 .toast.visible{transform:translate(-50%,-50%) translateY(0)}
-:root{--fs-et:clamp(24px,5vw,30px);--fs-eb:clamp(16px,3.5vw,20px);--ph:clamp(14px,3vw,18px)}
+:root{--fs-et:clamp(20px,4vw,24px);--fs-eb:clamp(15px,3.2vw,18px);--ph:12px}
 }
-@media(orientation:landscape) and (max-width:700px){:root{--sidebar-w:clamp(100px,20vw,120px);--list-w:clamp(180px,30vw,220px)}}
+@media(orientation:landscape) and (max-width:700px){:root{--sidebar-w:95px;--list-w:165px}}
 </style></head><body>
 <div class="app">
 <header><button id="cancelSelectBtn" onclick="cancelSelection()">Cancelar</button><h1>Awooo</h1><div class="menu-btn" onclick="toggleMenu(event)"><span></span><span></span><span></span></div></header>
@@ -240,7 +245,7 @@ header h1{position:static;transform:none;margin:0 0 20px 0}
 <div id="colorPicker" class="color-picker" onclick="event.stopPropagation()"><div class="color-option" style="background:transparent;border:2px solid var(--border)" onclick="setNoteColor(null)"></div><div class="color-option" style="background:var(--c-red)" onclick="setNoteColor('#ff3b30')"></div><div class="color-option" style="background:var(--c-orange)" onclick="setNoteColor('#ff9500')"></div><div class="color-option" style="background:var(--c-yellow)" onclick="setNoteColor('#ffcc00')"></div><div class="color-option" style="background:var(--c-green)" onclick="setNoteColor('#34c759')"></div><div class="color-option" style="background:var(--c-blue)" onclick="setNoteColor('#007aff')"></div><div class="color-option" style="background:var(--c-purple)" onclick="setNoteColor('#af52de')"></div><div class="color-option" style="background:var(--c-pink)" onclick="setNoteColor('#ff2d55')"></div></div>
 <div id="actionBar" class="action-bar"><button class="pin-btn" onclick="pinSelected()"><span class="pin-icon"></span>Fixar</button><button id="colorToggleBtn" onclick="toggleColorPicker()"><span class="palette-icon"><span></span><span></span><span></span></span>Cor</button><button class="delete-btn" onclick="deleteSelected()"><span class="trash-icon"></span>Apagar</button></div>
 <div id="confirmDialog" class="confirm-dialog" onclick="closeConfirmDialog()"><div class="confirm-box" onclick="event.stopPropagation()"><h3>Apagar?</h3><p id="confirmMessage"></p><button class="confirm-delete" onclick="confirmDelete()">Apagar</button><button class="confirm-cancel" onclick="closeConfirmDialog()">Cancelar</button></div></div>
-<div id="editor" class="editor"><div class="editor-header"><div class="editor-tools"><button id="boldBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('bold')">B</button><button id="italicBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('italic')">I</button><button id="underlineBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('underline')">U</button><div class="tool-sep"></div><button id="checklistBtn" class="tool-btn" onmousedown="event.preventDefault();insertChecklist()">✓</button></div><span onclick="saveNote()" style="font-weight:600;color:var(--accent);cursor:pointer;padding:8px 12px;border-radius:10px;transition:background .15s;letter-spacing:0.3px" onmousedown="event.preventDefault()">Pronto</span></div><div class="editor-content"><div id="editorTitle" class="editor-title" contenteditable="true" spellcheck="false"></div><div id="editorBody" class="editor-body" contenteditable="true" spellcheck="false"></div></div></div>
+<div id="editor" class="editor"><div class="editor-header"><div class="editor-tools"><button id="boldBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('bold')">B</button><button id="italicBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('italic')">I</button><button id="underlineBtn" class="tool-btn" onmousedown="event.preventDefault();applyFormat('underline')">U</button><div class="tool-sep"></div><button id="checklistBtn" class="tool-btn" onmousedown="event.preventDefault();insertChecklist()">✓</button></div><span onclick="saveNote()" style="font-weight:600;color:var(--accent);cursor:pointer;padding:6px 10px;border-radius:8px;transition:background .15s;letter-spacing:0.2px;font-size:clamp(16px,3.8vw,18px)" onmousedown="event.preventDefault()">Pronto</span></div><div class="editor-content"><div id="editorTitle" class="editor-title" contenteditable="true" spellcheck="false"></div><div id="editorBody" class="editor-body" contenteditable="true" spellcheck="false"></div></div></div>
 </div>
 <script>
 let notes=JSON.parse(localStorage.getItem('awoo'))||[];
